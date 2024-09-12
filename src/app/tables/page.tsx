@@ -7,7 +7,6 @@ const TablesPage = () => {
   return (
     <DefaultLayout>
       <Breadcrumb pageName="文章審查" />
-
       <div className="flex flex-col gap-10">
         <TableOne />
       </div>

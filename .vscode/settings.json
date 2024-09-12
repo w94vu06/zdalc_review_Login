@@ -1,0 +1,12 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "driver": "SQLite",
+            "database": "${workspaceFolder:free-nextjs-admin-dashboard-main}/prisma/dev.db",
+            "name": "post",
+            "group": "post"
+        }
+    ],
+    "sqltools.useNodeRuntime": true
+}

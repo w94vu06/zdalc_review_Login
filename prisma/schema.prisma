@@ -9,6 +9,15 @@ datasource db {
   url      = "file:./dev.db"
 }
 
+model Session {
+  id           Int      @id @default(autoincrement())
+  sessionToken String   @unique
+  userId       Int
+  user         User     @relation(fields: [userId], references: [id])
+  expires      DateTime
+}
+
+
 model User {
   id              Int      @id @default(autoincrement())
   email           String   @unique
@@ -24,6 +33,7 @@ model User {
   jobTitle        String?  // 職稱
   posts           Post[]   @relation("UserPosts")
   reviews         Post[]   @relation("UserReviews")
+  sessions        Session[]
 }
 
 model Post {

@@ -17,7 +17,7 @@ const SignIn: React.FC = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("/api/login", {
+      const response = await fetch("/api/signin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -36,7 +36,7 @@ const SignIn: React.FC = () => {
           setError(data.message || "登入失敗");
         }
       } else {
-        setError("Server returned a non-JSON response");
+        setError("帳號或密碼錯誤");
       }
       
     } catch (err) {
@@ -52,23 +52,13 @@ const SignIn: React.FC = () => {
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="flex flex-wrap items-center">
           <div className="hidden w-full xl:block xl:w-1/2">
-            <div className="px-26 py-17.5 text-center">
-              <Link className="mb-5.5 inline-block" href="/">
-                <Image
-                  className="hidden dark:block"
-                  src={"/images/logo/logo.svg"}
+            <div className="px-32 py-17.5 text-center">
+            <Image
+                  src={"/images/logo/zd_logo.png"}
                   alt="Logo"
-                  width={176}
+                  width={300}
                   height={32}
                 />
-                <Image
-                  className="dark:hidden"
-                  src={"/images/logo/logo-dark.svg"}
-                  alt="Logo"
-                  width={176}
-                  height={32}
-                />
-              </Link>
             </div>
           </div>
 

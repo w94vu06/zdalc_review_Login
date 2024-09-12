@@ -1,9 +1,11 @@
 import { BRAND } from "@/types/brand";
 import Image from "next/image";
+import { FaRegThumbsUp } from "react-icons/fa6";
+import { FaRegThumbsDown } from "react-icons/fa6";
 
 const brandData: BRAND[] = [
   {
-    logo: "/images/brand/brand-01.svg",
+    logo: "/images/brand/thumb-down.svg",
     name: "Google",
     visitors: 3.5,
     revenues: "5,768",
@@ -11,7 +13,7 @@ const brandData: BRAND[] = [
     conversion: 4.8,
   },
   {
-    logo: "/images/brand/brand-02.svg",
+    logo: "/images/brand/thumb-up.svg",
     name: "Twitter",
     visitors: 2.2,
     revenues: "4,635",
@@ -87,8 +89,10 @@ const TableOne = () => {
           >
             <div className="flex items-center gap-3 p-2.5 xl:p-5">
               <div className="flex-shrink-0">
-                <Image src={brand.logo} alt="Brand" width={48} height={48} />
+                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red">
+                </div>
               </div>
+
               <p className="hidden text-black dark:text-white sm:block">
                 {brand.name}
               </p>

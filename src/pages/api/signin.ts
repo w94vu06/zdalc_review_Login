@@ -1,8 +1,10 @@
-// pages/api/login.ts
+// pages/api/signin.ts
 
 import { NextApiRequest, NextApiResponse } from 'next';
 import bcrypt from "bcryptjs";
+import jwt from 'jsonwebtoken';
 import prisma from '@/lib/prisma';
+import { serialize } from 'cookie';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
@@ -30,7 +32,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       return res.status(401).json({ message: 'Invalid email or password' });
     }
 
-    // 通常這裡你會產生一個JWT或者是建立一個session
+    const jwtSecret = process.env.JWT_SECRET;
+    
+    if (!jwtSecret) {
+      throw new Error('JWT_SECRET is not defined');
+    }
+    
+    const token = jwt.sign(
+      { userId: user.id, email: user.email },
+      jwtSecret
+    );
+    
+    // 設置 Cookie，將 JWT 儲存其中
+    res.setHeader('Set-Cookie', serialize('token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production', // 只在 production 中使用 secure 屬性
+      maxAge: 3600, // 1 小時
+      path: '/',
+    }));
+
     return res.status(200).json({ message: 'Login successful', user });
   } catch (error) {
     console.error('Error logging in user:', error);
