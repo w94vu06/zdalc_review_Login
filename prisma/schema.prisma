@@ -1,0 +1,39 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id              Int      @id @default(autoincrement())
+  email           String   @unique
+  password        String
+  name            String?
+  idNumber        String?   @unique  // 身分證字號
+  householdAddr   String?  // 戶籍地址
+  residentialAddr String?  // 居住地址
+  phoneNumber     String?  // 聯絡電話
+  birthDate       DateTime? // 出生日期
+  bankAccount     String?   // 郵局帳號
+  currentCompany  String?  // 現職單位
+  jobTitle        String?  // 職稱
+  posts           Post[]   @relation("UserPosts")
+  reviews         Post[]   @relation("UserReviews")
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String
+  author    User     @relation("UserPosts", fields: [authorId], references: [id])
+  authorId  Int
+  category  String
+  reviewer  User?    @relation("UserReviews", fields: [reviewerId], references: [id])
+  reviewerId Int?
+  comment   String?
+}
